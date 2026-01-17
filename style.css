@@ -34,7 +34,7 @@ body {
   line-height: 1.6;
 }
 
-h1, h2, h3, h4 { font-family: "Playfair Display", serif; color: var(--neutral-900); margin: 0 0 0.5rem; }
+h1, h2, h3, h4 { font-family: "Playfair Display", serif; color: var(--neutral-900); margin: 0 0 0.5rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); }
 p { margin: 0 0 1rem; color: var(--muted); }
 a { color: var(--primary-acc); text-decoration: none; }
 a:hover { text-decoration: underline; }
@@ -127,8 +127,8 @@ a:hover { text-decoration: underline; }
   color: var(--white);
   text-align: center;
 }
-.hero-title { font-size: clamp(2rem, 5vw, 3rem); color: #fff; }
-.hero-subtitle { color: #f1f5f9; margin-bottom: 1.5rem; }
+.hero-title { font-size: clamp(2rem, 5vw, 3rem); color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); }
+.hero-subtitle { color: #f1f5f9; margin-bottom: 1.5rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
 
 .hero-cards {
   display: grid;
@@ -143,9 +143,10 @@ a:hover { text-decoration: underline; }
   padding: 1rem;
   border-radius: var(--radius);
   backdrop-filter: blur(6px);
-  box-shadow: var(--shadow);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
-.card h3 { color: #fff; }
+.card h3 { color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
+.card p { color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
 
 /* Card slide-in animation */
 @keyframes slideInFromBottom {
@@ -168,14 +169,42 @@ a:hover { text-decoration: underline; }
 .hero-cards .card:nth-child(2) { animation-delay: 0.4s; }
 .hero-cards .card:nth-child(3) { animation-delay: 0.6s; }
 
+/* Hero title and subtitle slide-in from bottom */
+.hero-title, .hero-subtitle {
+  animation: slideInFromBottom 0.8s ease-out forwards;
+  opacity: 0; /* Initial state */
+}
+
+.hero-title { animation-delay: 0s; }
+.hero-subtitle { animation-delay: 0.1s; }
+
+/* Button slide-in animation from right */
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.hero-content .btn.btn-primary {
+  animation: slideInFromRight 0.8s ease-out forwards;
+  animation-delay: 1.5s;
+  opacity: 0; /* Initial state */
+}
+
 .btn {
   display: inline-block;
   padding: 0.75rem 1rem;
   border-radius: 10px;
   font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
 .btn-primary {
   background: linear-gradient(135deg, var(--green-600), var(--blue-600));
   color: #fff;
@@ -192,6 +221,35 @@ a:hover { text-decoration: underline; }
 .section.alt { background: var(--neutral-100); }
 .section-header { text-align: center; margin-bottom: 2rem; }
 .section-header p { max-width: 720px; margin: 0.5rem auto 0; }
+
+/* Scroll animations */
+.section-header {
+  transform: translateX(50px);
+  opacity: 0;
+  transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+}
+.section-header.animate {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.info-card, .feature, .gallery-item {
+  transform: translateX(50px);
+  opacity: 0;
+  transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+}
+.info-card.animate, .feature.animate, .gallery-item.animate {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Staggered delays for cards */
+.info-card:nth-child(1), .feature:nth-child(1), .gallery-item:nth-child(1) { transition-delay: 0.4s; }
+.info-card:nth-child(2), .feature:nth-child(2), .gallery-item:nth-child(2) { transition-delay: 0.5s; }
+.info-card:nth-child(3), .feature:nth-child(3), .gallery-item:nth-child(3) { transition-delay: 0.6s; }
+.info-card:nth-child(4), .feature:nth-child(4), .gallery-item:nth-child(4) { transition-delay: 0.7s; }
+.info-card:nth-child(5), .feature:nth-child(5), .gallery-item:nth-child(5) { transition-delay: 0.8s; }
+.info-card:nth-child(6), .feature:nth-child(6), .gallery-item:nth-child(6) { transition-delay: 0.9s; }
 
 /* Grids */
 .grid { display: grid; gap: 1.5rem; }
