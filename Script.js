@@ -53,3 +53,45 @@ if (form) {
     setTimeout(() => (status.textContent = ''), 6000);
   });
 }
+
+// Scroll animations using Intersection Observer
+const observerOptions = {
+  threshold: 0,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('animate');
+    }
+  });
+}, observerOptions);
+
+// Observe section headers
+document.querySelectorAll('.section-header').forEach(header => {
+  observer.observe(header);
+});
+
+// Observe grids for cards
+document.querySelectorAll('.grid, .gallery-grid').forEach(grid => {
+  const gridObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const children = entry.target.querySelectorAll('.info-card, .feature, .gallery-item');
+        children.forEach(child => {
+          child.classList.add('animate');
+        });
+      }
+    });
+  }, observerOptions);
+  gridObserver.observe(grid);
+});
+
+// Trigger animations for elements already in view on load
+document.querySelectorAll('.section-header').forEach(header => {
+  const rect = header.getBoundingClientRect();
+  if (rect.top < window.innerHeight && rect.bottom > 0) {
+    header.classList.add('animate');
+  }
+});
